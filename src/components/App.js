@@ -1,10 +1,9 @@
 import React from "react";
-import { WeatherAPIRequest } from "../utils/axios";
+// import { WeatherAPIRequest } from "../utils/axios";
 import { Container, Row, Col } from "reactstrap";
 import SearchBar from "./SearchBar";
 import WeatherList from "./WeatherList";
 import { get } from "lodash";
-
 
 export default class App extends React.Component {
   state = {
@@ -41,7 +40,7 @@ export default class App extends React.Component {
     //   }
     // });
     this.setState({
-      place: place,
+      place: place
       // weather: response.data.list
     });
     // console.log(place);

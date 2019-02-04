@@ -1,9 +1,16 @@
 import { FETCH_WEATHER } from "../actions/index";
 
-export default (state=[], action) => {
-  switch (action.type) {
+const initialState = {
+  list: []
+};
+
+export default (state = initialState, { type, payload }) => {
+  switch (type) {
     case FETCH_WEATHER:
-      return [...state, action.payload ];
+      return {
+        ...state,
+        list: payload
+      };
     default:
       return state;
   }
