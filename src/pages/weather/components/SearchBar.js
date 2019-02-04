@@ -2,7 +2,7 @@ import React from "react";
 import { Form, InputGroup } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchWeather } from "../actions/index";
+import { fetchWeather } from "/Users/oleg/Desktop/Frontend/src/Store/actions";
 /* global google */
 
 class SearchBar extends React.PureComponent {
@@ -24,7 +24,6 @@ class SearchBar extends React.PureComponent {
   handlePlaceChanged = () => {
     const place = this.autocomplete.getPlace();
     this.props.onPlaceChanged(place);
-
     this.props.fetchWeather(
       place.geometry.location.lat(),
       place.geometry.location.lng()

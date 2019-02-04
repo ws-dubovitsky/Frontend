@@ -1,4 +1,4 @@
-import { WeatherAPIRequest } from "../utils/axios";
+import { WeatherAPIRequest } from "/Users/oleg/Desktop/Frontend/src/SharedComponents/utils/axios.js";
 
 const API = "a1940f6091cee8f1939beaa1ed9a82dc";
 

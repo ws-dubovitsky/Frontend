@@ -1,11 +1,10 @@
 import React from "react";
-// import { WeatherAPIRequest } from "../utils/axios";
 import { Container, Row, Col } from "reactstrap";
 import SearchBar from "./SearchBar";
 import WeatherList from "./WeatherList";
 import { get } from "lodash";
 
-export default class App extends React.Component {
+export default class WeatherTable extends React.PureComponent {
   state = {
     place: {},
     weather: [],
@@ -32,18 +31,9 @@ export default class App extends React.Component {
   };
 
   showPlaceDetails = place => {
-    // const response = await WeatherAPIRequest.get("/data/2.5/forecast", {
-    //   params: {
-    //     lat: place.geometry.location.lat(),
-    //     lon: place.geometry.location.lng(),
-    //     appid: "a1940f6091cee8f1939beaa1ed9a82dc"
-    //   }
-    // });
     this.setState({
       place: place
-      // weather: response.data.list
     });
-    // console.log(place);
   };
 
   render() {

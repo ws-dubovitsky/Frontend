@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
-import App from "./components/App";
+import App from "./pages/weather/components/App";
 import "bootstrap/dist/css/bootstrap.min.css";
-import reducers from "./reducers";
+import reducers from "//Users/oleg/Desktop/Frontend/src/Store/reducers";
 import thunk from "redux-thunk";
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);

@@ -9,7 +9,7 @@ class WeatherList extends React.PureComponent {
   render() {
     console.log(this.props.weather.list.map(item => item.main));
 
-    const { sortBy, sortOrder, data, onSorted } = this.props;
+    const { sortBy, sortOrder, onSorted } = this.props;
     return (
       <>
         {this.props.weather.list.length > 0 ? (
