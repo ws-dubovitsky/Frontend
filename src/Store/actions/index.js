@@ -6,9 +6,7 @@ export const FETCH_WEATHER = "FETCH_WEATHER";
 export const fetchWeather = (lat, lon) => async dispatch => {
   try {
     const url = `/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API}`;
-
     const response = await WeatherAPIRequest.get(url);
-    console.log("RESPONCE", response.data.list);
 
     dispatch({
       type: FETCH_WEATHER,
