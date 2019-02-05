@@ -2,32 +2,10 @@ import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import SearchBar from "./SearchBar";
 import WeatherList from "./WeatherList";
-import { get } from "lodash";
 
 export default class WeatherTable extends React.PureComponent {
   state = {
-    place: {},
-    weather: [],
-    sortBy: "dt",
-    sortOrder: "asc"
-  };
-
-  onSorted = arg => {
-    const cloneWeather = JSON.parse(JSON.stringify(this.state.weather));
-    const { sortBy, sortOrder } = this.state;
-    this.setState({
-      weather: cloneWeather.sort(function(a, b) {
-        if (get(a, sortBy) < get(b, sortBy)) {
-          return sortOrder === "asc" ? 1 : -1;
-        }
-        if (get(a, sortBy) > get(b, sortBy)) {
-          return sortOrder === "asc" ? -1 : 1;
-        }
-        return 0;
-      }),
-      sortBy: arg,
-      sortOrder: sortBy === arg && sortOrder === "asc" ? "desc" : "asc"
-    });
+    place: {}
   };
 
   showPlaceDetails = place => {
@@ -45,11 +23,16 @@ export default class WeatherTable extends React.PureComponent {
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col
+            style={{
+              display: "flex",
+              justifyContent: "justify",
+              flexDirection: "column",
+              flexWrap: "wrap"
+            }}
+          >
             <WeatherList
-              sortOrder={this.state.sortOrder}
-              sortBy={this.state.sortBy}
-              onSorted={this.onSorted}
+              style={{ display: "flex" }}
               data={this.state.weather}
             />
           </Col>

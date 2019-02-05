@@ -32,7 +32,7 @@ class SearchBar extends React.PureComponent {
 
   render() {
     return (
-      <Form>
+      <Form style={{ marginTop: "1rem", marginBottom: "1rem" }}>
         <InputGroup>
           <input
             className="form-control"
