@@ -30,6 +30,7 @@ class SearchBar extends React.PureComponent {
       place.geometry.location.lng()
     );
 
+
     // const data = {
     //   lat: place.geometry.location.lat(),
     //   lon: place.geometry.location.lng()

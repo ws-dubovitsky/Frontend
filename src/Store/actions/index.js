@@ -11,11 +11,13 @@ export const fetchWeather = (lat, lon) => async dispatch => {
     };
 
     const response = await WeatherAPIRequest(data);
+    console.log(response.data.list);
+    // console.log("OK");
 
-    console.log("response", response);
+    // console.log("response", response);
     dispatch({
       type: FETCH_WEATHER,
-      payload: response
+      payload: response.data.list
     });
   } catch (error) {
     console.log("error", error);

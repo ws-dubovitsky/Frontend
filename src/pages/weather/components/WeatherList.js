@@ -4,7 +4,7 @@ import WeatherRow from "./WeatherRow";
 
 class WeatherList extends React.PureComponent {
   render() {
-    console.log(this.props.weather.list.map(item => item.main));
+    console.log(this.props.weather);
     return (
       <>
         {this.props.weather.list.map(obj => (
