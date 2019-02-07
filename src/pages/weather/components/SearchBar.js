@@ -3,7 +3,6 @@ import { Form, InputGroup } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchWeather } from "../../../Store/actions";
-// import axios from "axios";
 /* global google */
 
 class SearchBar extends React.PureComponent {
@@ -24,35 +23,10 @@ class SearchBar extends React.PureComponent {
 
   handlePlaceChanged = () => {
     const place = this.autocomplete.getPlace();
-    this.props.onPlaceChanged(place);
     this.props.fetchWeather(
       place.geometry.location.lat(),
       place.geometry.location.lng()
     );
-
-
-    // const data = {
-    //   lat: place.geometry.location.lat(),
-    //   lon: place.geometry.location.lng()
-    // }
-
-    // console.log('data', data)
-
-    // console.log('okkkk')
-
-    // axios
-    //   .get("/api/weather", {
-    //     params: {
-    //       lat: place.geometry.location.lat(),
-    //       lon: place.geometry.location.lng()
-    //     }
-    //   })
-    //   .then(function(response) {
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
   };
 
   render() {
@@ -80,5 +54,3 @@ export default connect(
   null,
   mapDispatchToProps
 )(SearchBar);
-
-// export default SearchBar;

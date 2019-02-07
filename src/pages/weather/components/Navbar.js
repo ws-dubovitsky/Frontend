@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "./img/logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -13,19 +14,19 @@ const Navbar = () => {
           className="navbar-nav justify-content-end"
         >
           <li className="nav-item">
-            <a className="nav-link" href="/#">
+            <Link className="nav-link" to="/main">
               Main
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/#">
+            <Link className="nav-link" to="/history">
               History
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/#">
+            <Link className="nav-link" to="/logout">
               Logout
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

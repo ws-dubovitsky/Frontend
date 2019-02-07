@@ -1,6 +1,4 @@
-import { WeatherAPIRequest } from "../../SharedComponents/utils/axios";
-
-// const API = "a1940f6091cee8f1939beaa1ed9a82dc";
+import { WeatherAPIRequest, userCreate } from "../../SharedComponents/utils/axios";
 
 export const FETCH_WEATHER = "FETCH_WEATHER";
 export const fetchWeather = (lat, lon) => async dispatch => {
@@ -11,14 +9,29 @@ export const fetchWeather = (lat, lon) => async dispatch => {
     };
 
     const response = await WeatherAPIRequest(data);
-    console.log(response.data.list);
-    // console.log("OK");
-
-    // console.log("response", response);
     dispatch({
       type: FETCH_WEATHER,
       payload: response.data.list
     });
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+export const FETCH_USER = "FETCH_USER";
+export const fetchUser = user => async dispatch => {
+  try {
+    const data = {
+      user
+    };
+
+    const response = await userCreate(data);
+    console.log(response);
+
+    //   dispatch({
+    //     type: FETCH_WEATHER,
+    //     payload: response
+    //   });
   } catch (error) {
     console.log("error", error);
   }
