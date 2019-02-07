@@ -2,8 +2,8 @@ import React from "react";
 import { Form, InputGroup } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import { fetchWeather } from "/Users/oleg/Desktop/Frontend/src/Store/actions";
-import axios from "axios";
+import { fetchWeather } from "../../../Store/actions";
+// import axios from "axios";
 /* global google */
 
 class SearchBar extends React.PureComponent {
@@ -25,22 +25,19 @@ class SearchBar extends React.PureComponent {
   handlePlaceChanged = () => {
     const place = this.autocomplete.getPlace();
     this.props.onPlaceChanged(place);
-    // this.props.fetchWeather(
-    //   place.geometry.location.lat(),
-    //   place.geometry.location.lng()
-    // );
+    this.props.fetchWeather(
+      place.geometry.location.lat(),
+      place.geometry.location.lng()
+    );
 
-    const data = {
-      lat: place.geometry.location.lat(),
-      lon: place.geometry.location.lng()
-    }
+    // const data = {
+    //   lat: place.geometry.location.lat(),
+    //   lon: place.geometry.location.lng()
+    // }
 
-    console.log('data', data)
-    
-    console.log('okkkk')
-    axios.post('http://localhost:3001/api/weather', data);
+    // console.log('data', data)
 
-  
+    // console.log('okkkk')
 
     // axios
     //   .get("/api/weather", {
@@ -74,13 +71,13 @@ class SearchBar extends React.PureComponent {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({ fetchWeather }, dispatch);
-// }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather }, dispatch);
+}
 
-// export default connect(
-//   null,
-//   mapDispatchToProps
-// )(SearchBar);
+export default connect(
+  null,
+  mapDispatchToProps
+)(SearchBar);
 
-export default SearchBar;
+// export default SearchBar;
