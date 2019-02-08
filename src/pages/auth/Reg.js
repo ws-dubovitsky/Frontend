@@ -1,6 +1,8 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Form, Button } from "reactstrap";
 
 class Reg extends React.PureComponent {
   renderError = ({ error, touched }) => {
@@ -24,15 +26,28 @@ class Reg extends React.PureComponent {
     );
   };
 
-  onSubmit = formValues => {
-    return formValues;
+  onSubmit = ({ email, password }) => {
+    const login = {
+      email: email,
+      password: password
+    };
+    console.log(login);
+    return axios
+      .post("http://localhost:3001/users/login", login)
+      .then(res => {
+        localStorage.setItem("usertoken", res.data);
+        return res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
     // event.preventDefault();
   };
 
   render() {
     return (
       <>
-        <form
+        <Form
           style={{
             width: "600px",
             margin: "0 auto",
@@ -43,34 +58,61 @@ class Reg extends React.PureComponent {
           onSubmit={this.props.handleSubmit(this.onSubmit)}
           className="ui form error"
         >
-          <Field name="login" component={this.renderInput} label="Login" />
+          <Field
+            name="email"
+            component={this.renderInput}
+            label="Enter email"
+          />
           <Field
             name="password"
             component={this.renderInput}
-            label="password"
+            label="Enter Password"
           />
-          <button
-            style={{ textTransform: "uppercase" }}
-            className="ui button primary"
-          >
-            вход
-          </button>
-          <Link to="/regist" style={{ textTransform: "uppercase" }}>
-            Регистрация
-          </Link>
-        </form>
+          <div>
+            <ul
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                listStyle: "none",
+                textDecoration: "uppercase",
+                paddingLeft: "0"
+              }}
+            >
+              <li>
+                <Button
+                  style={{ textTransform: "uppercase" }}
+                  className="primary"
+                >
+                  вход
+                </Button>
+              </li>
+              <li
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignSelf: "center",
+                  textTransform: "uppercase"
+                }}
+              >
+                <Link to="/regist" style={{ color: "#000", textDecoration:"none" }}>
+                  Регистрация
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </Form>
       </>
     );
   }
 }
 
-const validate = formValues => {
+const validate = ({ email, password }) => {
   const errors = {};
-  if (!formValues.title) {
-    errors.title = "You must enter a title";
+  if (!email) {
+    errors.title = "You must enter a email";
   }
-  if (!formValues.description) {
-    errors.description = "You must enter a description";
+  if (!password) {
+    errors.password = "You must enter a password";
   }
 
   return errors;

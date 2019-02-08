@@ -1,4 +1,4 @@
-import { WeatherAPIRequest, userCreate } from "../../SharedComponents/utils/axios";
+import { WeatherAPIRequest} from "../../SharedComponents/utils/axios";
 
 export const FETCH_WEATHER = "FETCH_WEATHER";
 export const fetchWeather = (lat, lon) => async dispatch => {
@@ -14,25 +14,25 @@ export const fetchWeather = (lat, lon) => async dispatch => {
       payload: response.data.list
     });
   } catch (error) {
-    console.log("error", error);
+    console.log("error", error);  
   }
 };
 
-export const FETCH_USER = "FETCH_USER";
-export const fetchUser = user => async dispatch => {
-  try {
-    const data = {
-      user
-    };
+// export const FETCH_USER = "FETCH_USER";
+// export const fetchUser = user => async dispatch => {
+//   try {
+//     const data = {
+//       user
+//     };
 
-    const response = await userCreate(data);
-    console.log(response);
+//     const response = await userCreate(data);
+//     console.log(response);
 
-    //   dispatch({
-    //     type: FETCH_WEATHER,
-    //     payload: response
-    //   });
-  } catch (error) {
-    console.log("error", error);
-  }
-};
+//     //   dispatch({
+//     //     type: FETCH_WEATHER,
+//     //     payload: response
+//     //   });
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// };

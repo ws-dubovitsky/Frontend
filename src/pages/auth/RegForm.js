@@ -1,8 +1,11 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
+// import { Link } from "react-router-dom";
 
-import { fetchUser } from "../../Store/actions";
+import axios from "axios";
+
+// import { fetchUser } from "../../Store/actions";
 
 class RegForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
@@ -26,11 +29,17 @@ class RegForm extends React.PureComponent {
     );
   };
 
-  onSubmit = formValues => {
-    console.log(formValues);
-    fetchUser(formValues);
+  onSubmit = ({ first_name, last_name, email, password }) => {
+    const data = {
+      first_name: first_name,
+      last__name: last_name,
+      email: email,
+      password: password
+    };
+    console.log(data);
 
     // event.preventDefault();
+    axios.post("http://localhost:3001/users/register", data);
   };
 
   render() {
@@ -47,44 +56,56 @@ class RegForm extends React.PureComponent {
           onSubmit={this.props.handleSubmit(this.onSubmit)}
           className="ui form error"
         >
-          <Field name="login" component={this.renderInput} label="Login" />
+          <Field
+            name="first_name"
+            component={this.renderInput}
+            label="Entet First name"
+          />
+          <Field
+            name="last_name"
+            component={this.renderInput}
+            label="Enter Last name"
+          />
+          <Field
+            name="email"
+            type="email"
+            component={this.renderInput}
+            label="Enter Email"
+          />
           <Field
             name="password"
             component={this.renderInput}
-            label="password"
-          />
-          <Field
-            name="confirmPassword"
-            component={this.renderInput}
-            label="confirm password"
+            label="Enter password"
           />
 
-          <Link
-            to="/regist/info"
-            type="button"
+          <Button
+            color="secondary"
             style={{
-              textTransform: "uppercase",
-              textDecoration: "none",
-              color: "#fff"
+              textTransform: "uppercase"
             }}
           >
             Отправить
-          </Link>
+          </Button>
         </form>
       </>
     );
   }
 }
 
-const validate = formValues => {
+const validate = ({ first_name, last_name, email, password }) => {
   const errors = {};
-  if (!formValues.title) {
-    errors.title = "You must enter a title";
+  if (!first_name) {
+    errors.firstName = "You must enter first";
   }
-  if (!formValues.description) {
-    errors.description = "You must enter a description";
+  if (!last_name) {
+    errors.LastName = "You must enter last name";
   }
-
+  if (!email) {
+    errors.email = "You must enter a email";
+  }
+  if (!password) {
+    errors.password = "Password isCorrect";
+  }
   return errors;
 };
 
