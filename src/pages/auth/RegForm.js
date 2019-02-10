@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { Button } from "reactstrap";
 // import { Link } from "react-router-dom";
 
-import axios from "axios";
+import { register } from "../../SharedComponents/utils/axios";
 
 // import { fetchUser } from "../../Store/actions";
 
@@ -39,55 +39,62 @@ class RegForm extends React.PureComponent {
     console.log(data);
 
     // event.preventDefault();
-    axios.post("http://localhost:3001/users/register", data);
+    register(data).then(res => {
+      this.props.history.push(`/login`);
+    });
   };
 
   render() {
     return (
-      <>
-        <form
+      <form
+        style={{
+          width: "600px",
+          margin: "0 auto",
+          padding: "0 100px 0 100px"
+        }}
+        onSubmit={this.props.handleSubmit(this.onSubmit)}
+        className="ui form error"
+      >
+        <h1
           style={{
-            width: "600px",
-            margin: "0 auto",
-            padding: "60px",
-            paddingLeft: "100px",
-            paddingRight: "100px"
+            textAlign: "center",
+            fontSize: "1.5rem",
+            padding: "2rem 0"
           }}
-          onSubmit={this.props.handleSubmit(this.onSubmit)}
-          className="ui form error"
         >
-          <Field
-            name="first_name"
-            component={this.renderInput}
-            label="Entet First name"
-          />
-          <Field
-            name="last_name"
-            component={this.renderInput}
-            label="Enter Last name"
-          />
-          <Field
-            name="email"
-            type="email"
-            component={this.renderInput}
-            label="Enter Email"
-          />
-          <Field
-            name="password"
-            component={this.renderInput}
-            label="Enter password"
-          />
+          Регистрация
+        </h1>
+        <Field
+          name="first_name"
+          component={this.renderInput}
+          label="Entet First name"
+        />
+        <Field
+          name="last_name"
+          component={this.renderInput}
+          label="Enter Last name"
+        />
+        <Field
+          name="email"
+          type="email"
+          component={this.renderInput}
+          label="Enter Email"
+        />
+        <Field
+          name="password"
+          component={this.renderInput}
+          label="Enter password"
+        />
 
-          <Button
-            color="secondary"
-            style={{
-              textTransform: "uppercase"
-            }}
-          >
-            Отправить
-          </Button>
-        </form>
-      </>
+        <Button
+          color="secondary"
+          style={{
+            textTransform: "uppercase"
+          }}
+        >
+          Зарегестрироваться
+        </Button>
+      </form>
     );
   }
 }

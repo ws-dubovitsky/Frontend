@@ -30,6 +30,7 @@ class WeatherTable extends React.PureComponent {
   };
 
   render() {
+    console.log(this.props.weather);
     return (
       <Container>
         <Row>

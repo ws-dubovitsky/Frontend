@@ -23,6 +23,12 @@ class SearchBar extends React.PureComponent {
 
   handlePlaceChanged = () => {
     const place = this.autocomplete.getPlace();
+
+    // getPlace(place.formatted_address);
+    // console.log(
+    //   "getPlace(place.formatted_address)",
+    //   getPlace(place.formatted_address)
+    // );
     this.props.fetchWeather(
       place.geometry.location.lat(),
       place.geometry.location.lng()

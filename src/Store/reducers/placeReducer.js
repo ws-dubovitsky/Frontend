@@ -1,4 +1,4 @@
-import { FETCH_WEATHER } from "../actions/types";
+import { FETCH_PLACE } from "../actions/types";
 
 const initialState = {
   list: []
@@ -6,7 +6,7 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case FETCH_WEATHER:
+    case FETCH_PLACE:
       return {
         ...state,
         list: payload
