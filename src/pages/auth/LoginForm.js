@@ -29,10 +29,13 @@ class Reg extends React.PureComponent {
   onSubmit = ({ email, password }) => {
     const User = {
       email: email,
-      password: password
+      password: password,
+     
     };
-    console.log(User);
+
+    // console.log("USER", User);
     login(User).then(res => {
+      // console.log("RES",req.body);
       if (res) {
         this.props.history.push(`/main`);
       }
