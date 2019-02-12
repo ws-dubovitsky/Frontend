@@ -1,7 +1,7 @@
-// import React from "react";
+import React from "react";
 
-// export default class HistoryItem extends React.PureComponent {
-//   render() {
-//     return <>{this.props.ceil}</>;
-//   }
-// }
+export default class HistoryItem extends React.PureComponent {
+  render() {
+    return <>{this.props.ceil}</>;
+  }
+}

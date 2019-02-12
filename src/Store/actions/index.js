@@ -1,6 +1,8 @@
-import { WeatherAPIRequest } from "../../SharedComponents/utils/axios";
-import {FETCH_WEATHER, FETCH_PLACE} from "./types";
-
+import {
+  WeatherAPIRequest,
+  getHistory
+} from "../../SharedComponents/utils/axios";
+import { FETCH_WEATHER, FETCH_HISTORY } from "./types";
 
 export const fetchWeather = (lat, lon) => async dispatch => {
   try {
@@ -10,6 +12,7 @@ export const fetchWeather = (lat, lon) => async dispatch => {
     };
 
     const response = await WeatherAPIRequest(data);
+    console.log(response);
     dispatch({
       type: FETCH_WEATHER,
       payload: response.data.list
@@ -19,35 +22,15 @@ export const fetchWeather = (lat, lon) => async dispatch => {
   }
 };
 
-
-
-export const getPlace = place => {
-  return {
-    type: FETCH_PLACE,
-    payload: place
-  };
-  
+export const fetchHistory = () => async dispatch => {
+  try {
+    const response = await getHistory();
+    console.log("response", response.data.History.map(item => item.weatherList));
+    dispatch({
+      type: FETCH_HISTORY,
+      payload: response.data.History
+    });
+  } catch (error) {
+    console.log("error", error);
+  }
 };
-// export const searchPlace = place => {
-//    = {};
-//   localStorage.setItem("clicks", newclick);
-// };
-
-// export const FETCH_USER = "FETCH_USER";
-// export const fetchUser = user => async dispatch => {
-//   try {
-//     const data = {
-//       user
-//     };
-
-//     const response = await userCreate(data);
-//     console.log(response);
-
-//     //   dispatch({
-//     //     type: FETCH_WEATHER,
-//     //     payload: response
-//     //   });
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };

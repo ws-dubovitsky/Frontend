@@ -1,11 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button } from "reactstrap";
-// import { Link } from "react-router-dom";
-
 import { register } from "../../SharedComponents/utils/axios";
-
-// import { fetchUser } from "../../Store/actions";
 
 class RegForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
@@ -32,13 +28,11 @@ class RegForm extends React.PureComponent {
   onSubmit = ({ first_name, last_name, email, password }) => {
     const data = {
       first_name: first_name,
-      last__name: last_name,
+      last_name: last_name,
       email: email,
       password: password
     };
     console.log(data);
-
-    // event.preventDefault();
     register(data).then(res => {
       this.props.history.push(`/login`);
     });

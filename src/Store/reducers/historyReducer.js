@@ -1,15 +1,15 @@
-import { FETCH_WEATHER } from "../actions/index";
+import { FETCH_HISTORY } from "../actions/types";
 
 const initialState = {
-  data: []
+  list: []
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case FETCH_WEATHER:
+    case FETCH_HISTORY:
       return {
         ...state,
-        data: payload
+        list: payload
       };
     default:
       return state;

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const url = "http://localhost:3001/api/weather";
 
 const axiosInsrance = axios.create({
@@ -24,3 +25,6 @@ export const login = user => {
       console.log(err);
     });
 };
+
+export const getHistory = () =>
+  axiosInsrance.post("http://localhost:3001/api/history");
