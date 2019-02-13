@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { login } from "../../SharedComponents/utils/axios";
 import { Form, Button } from "reactstrap";
 
-class Reg extends React.PureComponent {
+class LoginForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -119,4 +119,4 @@ const validate = ({ email, password }) => {
 export default reduxForm({
   form: "streamCreate12",
   validate
-})(Reg);
+})(LoginForm);

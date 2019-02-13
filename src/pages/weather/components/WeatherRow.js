@@ -1,17 +1,7 @@
 import React from "react";
 import WeatherCeil from "./WeatherCeil";
-// import { Collapse, Button, CardBody, Card } from "reactstrap";
 
 export default class WeatherRow extends React.PureComponent {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { collapse: false };
-  // }
-
-  // toggle = () => {
-  //   this.setState({ collapse: !this.state.collapse });
-  // };
-
   render() {
     return (
       <tr>

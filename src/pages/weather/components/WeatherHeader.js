@@ -1,7 +1,6 @@
 import React from "react";
 
 export default class WeatherHeader extends React.PureComponent {
-    
   sortSign = arg => {
     const { sortBy, sortOrder } = this.props;
     if (sortBy !== arg) {

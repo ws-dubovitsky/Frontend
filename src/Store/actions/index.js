@@ -2,7 +2,7 @@ import {
   WeatherAPIRequest,
   getHistory
 } from "../../SharedComponents/utils/axios";
-import { FETCH_WEATHER, FETCH_HISTORY } from "./types";
+import { FETCH_WEATHER, FETCH_HISTORY, FETCH_USER } from "./types";
 
 export const fetchWeather = (lat, lon) => async dispatch => {
   try {
@@ -25,10 +25,29 @@ export const fetchWeather = (lat, lon) => async dispatch => {
 export const fetchHistory = () => async dispatch => {
   try {
     const response = await getHistory();
-    console.log("response", response.data.History.map(item => item.weatherList));
+    console.log(
+      "response",
+      response.data.History.map(item => item.weatherList)
+    );
     dispatch({
       type: FETCH_HISTORY,
       payload: response.data.History
+    });
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+export const fetchUserForm = (first_name, last_name, email) => dispatch => {
+  try {
+    const user = {
+      first_name: first_name,
+      last_name: last_name,
+      email: email
+    };
+    dispatch({
+      type: FETCH_USER,
+      payload: user
     });
   } catch (error) {
     console.log("error", error);

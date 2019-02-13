@@ -1,26 +1,19 @@
 import React from "react";
 import jwt_decode from "jwt-decode";
+import { fetchUserForm } from "../../Store/actions";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { Container, Col, Table } from "reactstrap";
 
-class Profile extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      first_name: "",
-      last_name: "",
-      email: ""
-    };
-  }
-
+class UserForm extends React.PureComponent {
   componentDidMount() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
-    console.log("Decoded", decoded);
-    this.setState({
-      first_name: decoded.first_name,
-      last_name: decoded.last_name,
-      email: decoded.email
-    });
+    this.props.fetchUserForm(
+      decoded.first_name,
+      decoded.last_name,
+      decoded.email
+    );
   }
 
   render() {
@@ -35,21 +28,21 @@ class Profile extends React.PureComponent {
               textTransform: "uppercase"
             }}
           >
-            Profile
+            User info
           </h1>
           <Table striped>
             <tbody>
               <tr>
                 <td>First name</td>
-                <td>{this.state.first_name}</td>
+                <td>{this.props.userForm.list.first_name}</td>
               </tr>
               <tr>
                 <td>Last name</td>
-                <td>{this.state.last_name}</td>
+                <td>{this.props.userForm.list.last_name}</td>
               </tr>
               <tr>
                 <td>Email</td>
-                <td>{this.state.email}</td>
+                <td>{this.props.userForm.list.email}</td>
               </tr>
             </tbody>
           </Table>
@@ -59,4 +52,15 @@ class Profile extends React.PureComponent {
   }
 }
 
-export default Profile;
+function mapStateToProps({ userForm }) {
+  return { userForm };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchUserForm }, dispatch);
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserForm);

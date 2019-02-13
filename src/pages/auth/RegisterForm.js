@@ -3,7 +3,7 @@ import { Field, reduxForm } from "redux-form";
 import { Button } from "reactstrap";
 import { register } from "../../SharedComponents/utils/axios";
 
-class RegForm extends React.PureComponent {
+class RegisterForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -113,4 +113,4 @@ const validate = ({ first_name, last_name, email, password }) => {
 export default reduxForm({
   form: "streamCreate12",
   validate
-})(RegForm);
+})(RegisterForm);
