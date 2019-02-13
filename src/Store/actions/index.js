@@ -25,10 +25,7 @@ export const fetchWeather = (lat, lon) => async dispatch => {
 export const fetchHistory = () => async dispatch => {
   try {
     const response = await getHistory();
-    console.log(
-      "response",
-      response.data.History.map(item => item.weatherList)
-    );
+
     dispatch({
       type: FETCH_HISTORY,
       payload: response.data.History

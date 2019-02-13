@@ -2,15 +2,6 @@ import React from "react";
 import HistoryCeil from "./HistoryCeil";
 
 export default class HistoryRow extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { collapse: false };
-  }
-
-  toggle = () => {
-    this.setState({ collapse: !this.state.collapse });
-  };
-
   render() {
     return (
       <>
