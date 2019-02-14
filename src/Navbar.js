@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "../assets/logo.png";
 import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends React.PureComponent {
@@ -48,7 +47,7 @@ class Navbar extends React.PureComponent {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <a className="navbar-brand" href="/#">
-          <img style={{ width: "40px" }} src={logo} alt="logo" />
+          <img style={{ width: "40px" }} src="assets/logo.png" alt="logo" />
         </a>
         {localStorage.usertoken ? userLink : loginRegLink}
       </nav>

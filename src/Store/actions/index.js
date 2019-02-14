@@ -2,7 +2,7 @@ import {
   WeatherAPIRequest,
   getHistory
 } from "../../utils/axios";
-import { FETCH_WEATHER, FETCH_HISTORY, FETCH_USER } from "./types";
+import { FETCH_WEATHER, FETCH_HISTORY, FETCH_USER, SORT_HISTORY } from "./types";
 
 export const fetchWeather = (lat, lon) => async dispatch => {
   try {
@@ -51,6 +51,13 @@ export const fetchUserForm = (first_name, last_name, email) => dispatch => {
   }
 };
 
+export const onSorted = (arg) => async dispatch => {
+  console.log('dispatch sorth', arg)
+    dispatch({
+      type: SORT_HISTORY,
+      payload: arg
+    });
+};
 
 
 

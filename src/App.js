@@ -1,12 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
-
-import LoginForm from "../../pages/auth/login/index";
-import RegisterForm from "../../pages/auth/register/index";
-
+import LoginForm from "./pages/auth/login/index";
+import RegisterForm from "./pages/auth/register/index";
 import Navbar from "./Navbar";
-
-import AppProtected from "./AppProtected";
+import AppProtected from "./pages/AppProtected";
 
 export default class App extends React.Component {
   render() {

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class WeatherCeil extends React.PureComponent {
+export default class TableCeil extends React.PureComponent {
   render() {
     return <td>{this.props.ceil}</td>;
   }

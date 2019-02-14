@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import WeatherRow from "./WeatherRow";
+import TableRow from "../../../Shared/TableRow/TableRow";
 import { Table } from "reactstrap";
 import WeatherHeader from "./WeatherHeader";
 
@@ -41,7 +41,7 @@ class WeatherList extends React.PureComponent {
             </thead>
             <tbody>
               {this.props.weather.list.map(obj => (
-                <WeatherRow key={obj.dt} row={obj} />
+                <TableRow key={obj.dt} row={obj} />
               ))}
             </tbody>
           </Table>

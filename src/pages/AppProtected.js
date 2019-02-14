@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import UserForm from "../../pages/auth/account/index";
-import WeatherTable from "./components/WeatherTAble";
-import HistoryApp from "../history/HistoryApp";
-import { checkLogin } from "../../utils/axios";
+import UserForm from "./auth/account/index";
+import WeatherTable from "./weather/WeatherApp";
+import HistoryApp from "./history/HistoryApp";
+import { checkLogin } from "../utils/axios";
 
 class AppProtected extends React.PureComponent {
   componentDidMount() {

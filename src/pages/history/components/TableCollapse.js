@@ -1,5 +1,5 @@
 import React from "react";
-import HistoryRow from "./HistoryRow";
+import TableRow from "../../../Shared/TableRow/TableRow";
 import { Collapse, CardBody, Card, Table } from "reactstrap";
 
 export default class TableCollapse extends React.PureComponent {
@@ -18,7 +18,7 @@ export default class TableCollapse extends React.PureComponent {
               </thead>
               <tbody>
                 {this.props.obj.weatherList.map(item => (
-                  <HistoryRow key={item.dt} row={item} />
+                  <TableRow key={item.dt} row={item} />
                 ))}
               </tbody>
             </Table>
