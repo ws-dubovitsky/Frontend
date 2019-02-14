@@ -1,7 +1,7 @@
 import {
   WeatherAPIRequest,
   getHistory
-} from "../../SharedComponents/utils/axios";
+} from "../../utils/axios";
 import { FETCH_WEATHER, FETCH_HISTORY, FETCH_USER } from "./types";
 
 export const fetchWeather = (lat, lon) => async dispatch => {
@@ -50,3 +50,10 @@ export const fetchUserForm = (first_name, last_name, email) => dispatch => {
     console.log("error", error);
   }
 };
+
+
+
+
+
+
+

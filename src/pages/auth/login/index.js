@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
-import { login } from "../../SharedComponents/utils/axios";
+import { login } from "../../../utils/axios";
 import { Form, Button } from "reactstrap";
 
 class LoginForm extends React.PureComponent {
@@ -32,9 +32,7 @@ class LoginForm extends React.PureComponent {
       password: password
     };
 
-    // console.log("USER", User);
     login(User).then(res => {
-      // console.log("RES",req.body);
       if (res) {
         this.props.history.push(`/main`);
       }
@@ -58,7 +56,12 @@ class LoginForm extends React.PureComponent {
         >
           Авторизация
         </h1>
-        <Field name="email" component={this.renderInput} label="Enter email" />
+        <Field
+          name="email"
+          component={this.renderInput}
+          label="Enter email"
+          validate={email}
+        />
         <Field
           name="password"
           component={this.renderInput}
@@ -103,6 +106,11 @@ class LoginForm extends React.PureComponent {
     );
   }
 }
+
+const email = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+    ? "Invalid email address"
+    : undefined;
 
 const validate = ({ email, password }) => {
   const errors = {};

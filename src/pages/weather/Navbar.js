@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "./img/logo.png";
+import logo from "../assets/logo.png";
 import { Link, withRouter } from "react-router-dom";
 
 class Navbar extends React.PureComponent {
@@ -13,11 +13,6 @@ class Navbar extends React.PureComponent {
   render() {
     const loginRegLink = (
       <ul style={{ width: "100%" }} className="navbar-nav justify-content-end">
-        <li className="nav-item">
-          <Link className="nav-link" to="/">
-            Home
-          </Link>
-        </li>
         <li className="nav-item">
           <Link className="nav-link" to="/login">
             Login

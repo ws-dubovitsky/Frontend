@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button } from "reactstrap";
-import { register } from "../../SharedComponents/utils/axios";
+import { register } from "../../../utils/axios";
 
 class RegisterForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
@@ -73,6 +73,7 @@ class RegisterForm extends React.PureComponent {
           type="email"
           component={this.renderInput}
           label="Enter Email"
+          validate={email}
         />
         <Field
           name="password"
@@ -107,8 +108,14 @@ const validate = ({ first_name, last_name, email, password }) => {
   if (!password) {
     errors.password = "Password isCorrect";
   }
+
   return errors;
 };
+
+const email = value =>
+  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
+    ? "Invalid email address"
+    : undefined;
 
 export default reduxForm({
   form: "streamCreate12",

@@ -1,6 +1,6 @@
 import React from "react";
 import jwt_decode from "jwt-decode";
-import { fetchUserForm } from "../../Store/actions";
+import { fetchUserForm } from "../../../Store/actions";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Container, Col, Table } from "reactstrap";

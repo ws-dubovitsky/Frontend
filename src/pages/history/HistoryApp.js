@@ -1,8 +1,8 @@
 import React from "react";
-import HistoryTable from "./HistoryTable";
+import HistoryTable from "./components/HistoryTable";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchHistory } from "../../../Store/actions";
+import { fetchHistory } from "../../Store/actions";
 
 class HistoryApp extends React.PureComponent {
   componentDidMount() {
