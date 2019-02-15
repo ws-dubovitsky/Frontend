@@ -27,16 +27,24 @@ class LoginForm extends React.PureComponent {
   };
 
   onSubmit = ({ email, password }) => {
-    const User = {
+    const user = {
       email: email,
       password: password
     };
 
-    login(User).then(res => {
-      if (res) {
-        this.props.history.push(`/main`);
-      }
-    });
+    login(user)
+      .then(res => {
+        localStorage.setItem("usertoken", res.data);
+        return res.data;
+      })
+      .then(res => {
+        if (res) {
+          this.props.history.push(`/main`);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {

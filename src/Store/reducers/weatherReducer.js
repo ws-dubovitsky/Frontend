@@ -1,4 +1,4 @@
-import { FETCH_WEATHER, SORT_HISTORY } from "../actions/types";
+import { FETCH_WEATHER, SORT_HISTORY, CLEAR_WEATHER } from "../actions/types";
 import { get } from "lodash";
 
 
@@ -24,16 +24,13 @@ export default (state = initialState, { type, payload }) => {
           const { sortBy, sortOrder } = state;
           return cloneWeather.sort(function(a, b) {
             if (get(a, sortBy) < get(b, sortBy)) {
-              return sortOrder === "asc" ? 1 : -1;
+              return sortOrder === "asc" ? -1 : -1;
             }
             if (get(a, sortBy) > get(b, sortBy)) {
               return sortOrder === "asc" ? -1 : 1;
             }
             return 0;
           })
-
-          // // TODO: REMOVE IT
-          // return list
         })(),
         sortBy: payload,
         sortOrder: (()=> {
@@ -41,6 +38,8 @@ export default (state = initialState, { type, payload }) => {
           return sortBy === payload && sortOrder === "asc" ? "desc" : "asc"
         })()
       };
+      case CLEAR_WEATHER: 
+      return initialState;
     default:
       return state;
   }

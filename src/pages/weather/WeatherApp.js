@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { Container, Row, Col } from "reactstrap";
 import SearchBar from "./components/SearchBar";
 import WeatherList from "./components/WeatherList";
-import {onSorted} from "../../Store/actions";
+import {onSorted, clearWeatherData} from "../../Store/actions";
 // import { get } from "lodash";
 
 class WeatherTable extends React.PureComponent {
@@ -33,6 +33,11 @@ class WeatherTable extends React.PureComponent {
     //   sortOrder: sortBy === arg && sortOrder === "asc" ? "desc" : "asc"
     // });
   };
+
+  componentWillUnmount() {
+    console.log('unmount');
+    this.props.clearWeatherData();
+  }
 
   render() {
     console.log(this.props.weather);
@@ -70,7 +75,7 @@ function mapStateToProps({ weather }) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ onSorted }, dispatch);
+  return bindActionCreators({ onSorted, clearWeatherData }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WeatherTable);

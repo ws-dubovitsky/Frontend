@@ -18,13 +18,6 @@ export const register = newUser => {
 export const login = user => {
   return axiosInsrance
     .post("users/login", user)
-    .then(res => {
-      localStorage.setItem("usertoken", res.data);
-      return res.data;
-    })
-    .catch(err => {
-      console.log(err);
-    });
 };
 
 export const getHistory = () => axiosInsrance.post("api/history");
