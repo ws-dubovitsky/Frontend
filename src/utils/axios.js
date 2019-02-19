@@ -1,23 +1,30 @@
 import axios from "axios";
 
-const url = "http://localhost:3001/api/weather";
-
-const axiosInsrance = axios.create({
-  baseURL: "http://localhost:3001/",
-  timeout: 1000,
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:5000/",
+  timeout: 60000,
   headers: { Authorization: localStorage.getItem("usertoken") }
 });
 
-export const WeatherAPIRequest = data => axiosInsrance.post(url, data);
-export const checkLogin = () => axiosInsrance.get("users/checkLogin");
+axiosInstance.interceptors.request.use(function(config) {
+  const token = localStorage.getItem("usertoken")
 
-export const register = newUser => {
-  return axiosInsrance.post("users/register", newUser);
-};
+  if ( token != null ) {
+    config.headers.Authorization = token;
+  }
+
+  return config;
+}, function(err) {
+  return Promise.reject(err);
+});
+
+export const checkLogin = () => axiosInstance.get("/auth");
+
+// export const register = newUser => {
+//   return axiosInstance.post("users/register", newUser);
+// };
 
 export const login = user => {
-  return axiosInsrance
-    .post("users/login", user)
+  return axiosInstance
+    .post("auth/login/", user)
 };
-
-export const getHistory = () => axiosInsrance.post("api/history");

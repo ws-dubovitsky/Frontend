@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
-import { login } from "../../../utils/axios";
+import { login } from "../../utils/axios";
 import { Form, Button } from "reactstrap";
 
 class LoginForm extends React.PureComponent {
@@ -26,20 +26,22 @@ class LoginForm extends React.PureComponent {
     );
   };
 
-  onSubmit = ({ email, password }) => {
+  onSubmit = ({ username, password }) => {
     const user = {
-      email: email,
+      username: username,
       password: password
     };
 
     login(user)
       .then(res => {
-        localStorage.setItem("usertoken", res.data);
-        return res.data;
+        console.log('res.data', res.data)
+        localStorage.setItem("usertoken", res.data.token);
+        return res.data.token;
       })
       .then(res => {
         if (res) {
-          this.props.history.push(`/main`);
+          console.log('this.props', this.props)
+          this.props.history.push(`/dashboard`);
         }
       })
       .catch(err => {
@@ -65,10 +67,9 @@ class LoginForm extends React.PureComponent {
           Авторизация
         </h1>
         <Field
-          name="email"
+          name="username"
           component={this.renderInput}
-          label="Enter email"
-          validate={email}
+          label="Enter username"
         />
         <Field
           name="password"
@@ -115,11 +116,6 @@ class LoginForm extends React.PureComponent {
   }
 }
 
-const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? "Invalid email address"
-    : undefined;
-
 const validate = ({ email, password }) => {
   const errors = {};
   if (!email) {
@@ -134,5 +130,6 @@ const validate = ({ email, password }) => {
 
 export default reduxForm({
   form: "streamCreate12",
+  destroyOnUnmount: false,
   validate
 })(LoginForm);

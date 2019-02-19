@@ -1,64 +1,68 @@
 import React from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
-import UserForm from "./auth/account/index";
-import WeatherTable from "./weather/WeatherApp";
-import HistoryApp from "./history/HistoryApp";
-import { checkLogin } from "../utils/axios";
+import {Redirect, Route, Switch } from "react-router-dom";
+
+import {checkLogin} from '../utils/axios'
+
 import Navbar from '../Navbar'
+import Dashboard from './Dashboard';
+import Settings from './Settings';
+import LoginComponent from "./Login";
+
 
 class AppProtected extends React.PureComponent {
+  state = {
+  }
   componentDidMount() {
-    checkLogin().catch(() => {
-      this.props.history.push(`/login`);
-    });
+    this.checkLogin()
+  }
+ 
+
+  checkLogin = () => {
+    console.log(this.props)
+    return checkLogin()
+      .then((res) => {
+        console.log('res.data', res.data)
+        this.setState({
+          user: res.data
+        }, () => {
+          console.log('this.state', this.state)
+          if(!this.state.user._id) {
+            this.props.history.push('/login')
+          }
+          if(this.state.user._id && this.props.location.pathname === '/login') {
+            return this.props.history.push('/dashboard')
+          }
+        })
+      });
   }
 
   render() {
+    const {user} = this.state;
+    console.log('user in RENDER', this.state)
     return (
       <>
-        <Navbar />
         <Switch>
           <Route
             exact
-            path="/main"
-            render={() =>
-              localStorage.length ? (
-                <WeatherTable />
-              ) : (
-                <Redirect to={{ pathname: "/login" }} />
-              )
-            }
+            path="/login"
+            render={ ({history}) => <LoginComponent history={history}/>}
           />
-          <Route
-            exact
-            path="/history"
-            render={() =>
-              localStorage.length ? (
-                <HistoryApp />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/login"
-                  }}
+          {user && user._id && (
+            <>
+              <Navbar />
+                <Route
+                  exact
+                  path="/dashboard"
+                  component={Dashboard}
                 />
-              )
-            }
-          />
-          <Route
-            exact
-            path="/profile"
-            render={() =>
-              localStorage.length ? (
-                <UserForm />
-              ) : (
-                <Redirect
-                  to={{
-                    pathname: "/login"
-                  }}
+                <Route
+                  exact
+                  path="/settings"
+                  component={Settings}
                 />
-              )
-            }
-          />
+                <Redirect to="/dashboard"/>
+            </>
+          )}
         </Switch>
       </>
     );

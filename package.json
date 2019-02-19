@@ -17,7 +17,6 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-form": "^8.1.0",
-    "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
@@ -34,5 +33,12 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-jest": "^24.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "jest": "^24.1.0",
+    "react-addons-test-utils": "^15.6.2"
+  }
 }

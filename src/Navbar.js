@@ -23,20 +23,20 @@ class Navbar extends React.PureComponent {
     const userLink = (
       <ul style={{ width: "100%" }} className="navbar-nav justify-content-end">
         <li className="nav-item">
-          <Link className="nav-link" to="/main">
-            Main
+          <Link className="nav-link" to="/dashboard">
+            Dashboard
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/history">
-            History
+          <Link className="nav-link" to="/settings">
+            Settings
           </Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/profile">
             User
           </Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <a href="#/" className="nav-link" onClick={this.logOut}>
             Logout
