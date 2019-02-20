@@ -2,7 +2,47 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import { login } from "../../utils/axios";
-import { Form, Button } from "reactstrap";
+import asyncLocalStorage from "../../utils/localstorage.helper"
+import { Button } from "reactstrap";
+import styled from "styled-components";
+
+const Form = styled.form`
+  width: 600px;
+  margin: 0 auto;
+  padding: 0 100px 0 100px;
+  padding-right: 100px;
+`;
+
+const Title = styled.h1`
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem 0;
+`;
+
+const Ul = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  text-decoration: uppercase;
+  padding-left: 0;
+`;
+
+const Li = styled.li`
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  text-transform: uppercase;
+`;
+
+const StyledLink = styled(Link)`
+  color: #000;
+  text-decoration: none;
+`;
+
+const StyledButton = styled(Button)`
+  text-transform: uppercase;
+  padding: 0.2rem 1rem;
+`;
 
 class LoginForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
@@ -15,12 +55,12 @@ class LoginForm extends React.PureComponent {
     }
   };
 
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, label, meta, type }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} autoComplete="off" type={type} />
         <div>{this.renderError(meta)}</div>
       </div>
     );
@@ -34,102 +74,64 @@ class LoginForm extends React.PureComponent {
 
     login(user)
       .then(res => {
-        console.log('res.data', res.data)
-        localStorage.setItem("usertoken", res.data.token);
-        return res.data.token;
+        // console.log("res.data", res.data);
+        if(!res) throw new Error('Something wrong')
+        return asyncLocalStorage.setItem("usertoken", res.data.token);
       })
-      .then(res => {
-        if (res) {
-          console.log('this.props', this.props)
-          this.props.history.push(`/dashboard`);
-        }
+      .then(() => {
+        // console.log('asyncLocalStorage.getItem("usertoken")', asyncLocalStorage.getItem("usertoken"))
+        return this.props.history.push(`/dashboard`);
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
   render() {
     return (
       <Form
-        style={{
-          width: "600px",
-          margin: "0 auto",
-          padding: "0 100px 0 100px",
-          paddingRight: "100px"
-        }}
         onSubmit={this.props.handleSubmit(this.onSubmit)}
         className="ui form error"
       >
-        <h1
-          style={{ textAlign: "center", fontSize: "1.5rem", padding: "2rem 0" }}
-        >
-          Авторизация
-        </h1>
+        <Title>Authorization</Title>
         <Field
           name="username"
           component={this.renderInput}
-          label="Enter username"
+          label="Enter User Name"
         />
         <Field
           name="password"
           component={this.renderInput}
-          label="Enter password"
+          type="password"
+          label="Enter Password"
         />
         <div>
-          <ul
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              listStyle: "none",
-              textDecoration: "uppercase",
-              paddingLeft: "0"
-            }}
-          >
+          <Ul>
             <li>
-              <Button
-                style={{ textTransform: "uppercase", padding: "0.2rem 1rem" }}
-                className="primary"
-              >
-                вход
-              </Button>
+              <StyledButton className="primary">login</StyledButton>
             </li>
-            <li
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignSelf: "center",
-                textTransform: "uppercase"
-              }}
-            >
-              <Link
-                to="/regist"
-                style={{ color: "#000", textDecoration: "none" }}
-              >
-                Регистрация
-              </Link>
-            </li>
-          </ul>
+            <Li>
+              <StyledLink to="/register">sign in</StyledLink>
+            </Li>
+          </Ul>
         </div>
       </Form>
     );
   }
 }
 
-const validate = ({ email, password }) => {
+const validate = ({ username, password }) => {
   const errors = {};
-  if (!email) {
-    errors.title = "You must enter a email";
+  if (!username) {
+    errors.username = "You must enter user name";
   }
   if (!password) {
-    errors.password = "You must enter a password";
+    errors.password = "You must enter password";
   }
-
   return errors;
 };
 
 export default reduxForm({
   form: "streamCreate12",
-  destroyOnUnmount: false,
   validate
 })(LoginForm);

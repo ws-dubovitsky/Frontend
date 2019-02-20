@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(function(config) {
   const token = localStorage.getItem("usertoken")
-
+  // console.log('interceptors token', token)
   if ( token != null ) {
     config.headers.Authorization = token;
   }
@@ -20,9 +20,9 @@ axiosInstance.interceptors.request.use(function(config) {
 
 export const checkLogin = () => axiosInstance.get("/auth");
 
-// export const register = newUser => {
-//   return axiosInstance.post("users/register", newUser);
-// };
+export const register = newUser => {
+  return axiosInstance.post("auth/signup", newUser);
+};
 
 export const login = user => {
   return axiosInstance

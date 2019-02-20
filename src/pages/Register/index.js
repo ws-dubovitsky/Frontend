@@ -1,7 +1,19 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Button } from "reactstrap";
-import { register } from "../../../utils/axios";
+import { register } from "../../utils/axios";
+import styled from "styled-components";
+
+const Form = styled.form`
+  width: 600px;
+  margin: 0 auto;
+  padding: 0 100px 0 100px;
+`;
+const Title = styled.h1`
+  textalign: center;
+  fontsize: 1.5rem;
+  padding: 2rem 0;
+`;
 
 class RegisterForm extends React.PureComponent {
   renderError = ({ error, touched }) => {
@@ -14,25 +26,34 @@ class RegisterForm extends React.PureComponent {
     }
   };
 
-  renderInput = ({ input, label, meta }) => {
+  renderInput = ({ input, label, meta, type }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
     return (
       <div className={className}>
         <label>{label}</label>
-        <input {...input} autoComplete="off" />
+        <input {...input} autoComplete="off" type={type} />
         <div>{this.renderError(meta)}</div>
       </div>
     );
   };
 
-  onSubmit = ({ first_name, last_name, email, password }) => {
+  onSubmit = ({
+    username,
+    firstname,
+    lastname,
+    email,
+    password,
+    confirm_password
+  }) => {
     const data = {
-      first_name: first_name,
-      last_name: last_name,
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
       email: email,
-      password: password
+      password: password,
+      confirm_password: confirm_password
     };
-    console.log(data);
+    // console.log(data);
     register(data).then(res => {
       this.props.history.push(`/login`);
     });
@@ -40,82 +61,97 @@ class RegisterForm extends React.PureComponent {
 
   render() {
     return (
-      <form
-        style={{
-          width: "600px",
-          margin: "0 auto",
-          padding: "0 100px 0 100px"
-        }}
+      <Form
         onSubmit={this.props.handleSubmit(this.onSubmit)}
         className="ui form error"
       >
-        <h1
-          style={{
-            textAlign: "center",
-            fontSize: "1.5rem",
-            padding: "2rem 0"
-          }}
-        >
-          Регистрация
-        </h1>
+        <Title>Register New Account</Title>
         <Field
-          name="first_name"
+          name="username"
           component={this.renderInput}
-          label="Entet First name"
+          label="Enter User name"
         />
         <Field
-          name="last_name"
+          name="firstname"
           component={this.renderInput}
-          label="Enter Last name"
+          label="Enter First Name"
+        />
+        <Field
+          name="lastname"
+          component={this.renderInput}
+          label="Enter Last Name"
         />
         <Field
           name="email"
           type="email"
           component={this.renderInput}
           label="Enter Email"
-          validate={email}
         />
         <Field
           name="password"
           component={this.renderInput}
-          label="Enter password"
+          type="password"
+          label="Enter Password"
         />
-
+        <Field
+          name="confirm_password"
+          component={this.renderInput}
+          type="password"
+          label="Confirm Password"
+        />
         <Button
           color="secondary"
           style={{
             textTransform: "uppercase"
           }}
         >
-          Зарегестрироваться
+          Register
         </Button>
-      </form>
+      </Form>
     );
   }
 }
 
-const validate = ({ first_name, last_name, email, password }) => {
+const validate = ({
+  username,
+  firstname,
+  lastname,
+  email,
+  password,
+  confirm_password
+}) => {
   const errors = {};
-  if (!first_name) {
-    errors.firstName = "You must enter first";
+  if (!username) {
+    errors.username = "You must enter user name";
+  } else if (username.length > 15) {
+    errors.username = "Must be 15 characters or less";
   }
-  if (!last_name) {
-    errors.LastName = "You must enter last name";
+  if (!firstname) {
+    errors.firstname = "You must enter first name";
+  }
+  if (!lastname) {
+    errors.lastname = "You must enter last name";
   }
   if (!email) {
-    errors.email = "You must enter a email";
+    errors.email = "You must enter email";
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+    errors.email = "Invalid email address";
   }
   if (!password) {
-    errors.password = "Password isCorrect";
+    errors.password = "You must enter password";
+  }
+  if (!password) {
+    errors.password = "You must enter password";
+  }
+  if (!confirm_password) {
+    errors.confirm_password = "You must enter confirm password";
+  }
+  if (confirm_password !== password) {
+    errors.confirm_password = "Passwords don't match";
   }
 
   return errors;
 };
-
-const email = value =>
-  value && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)
-    ? "Invalid email address"
-    : undefined;
 
 export default reduxForm({
   form: "streamCreate12",
