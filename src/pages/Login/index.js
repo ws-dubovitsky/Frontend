@@ -108,7 +108,7 @@ class LoginForm extends React.PureComponent {
         <div>
           <Ul>
             <li>
-              <StyledButton className="primary">login</StyledButton>
+              <StyledButton className="primary">sing up</StyledButton>
             </li>
             <Li>
               <StyledLink to="/register">sign in</StyledLink>
