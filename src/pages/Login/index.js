@@ -2,7 +2,7 @@ import React from "react";
 import { Field, reduxForm } from "redux-form";
 import { Link } from "react-router-dom";
 import { login } from "../../utils/axios";
-import asyncLocalStorage from "../../utils/localstorage.helper"
+import asyncLocalStorage from "../../utils/localstorage.helper";
 import { Button } from "reactstrap";
 import styled from "styled-components";
 
@@ -35,8 +35,9 @@ const Li = styled.li`
 `;
 
 const StyledLink = styled(Link)`
-  color: #000;
-  text-decoration: none;
+  color: #000 !important;
+  text-decoration: none !important;
+  text-transform: uppercase;
 `;
 
 const StyledButton = styled(Button)`
@@ -75,7 +76,7 @@ class LoginForm extends React.PureComponent {
     login(user)
       .then(res => {
         // console.log("res.data", res.data);
-        if(!res) throw new Error('Something wrong')
+        if (!res) throw new Error("Something wrong");
         return asyncLocalStorage.setItem("usertoken", res.data.token);
       })
       .then(() => {
@@ -108,7 +109,7 @@ class LoginForm extends React.PureComponent {
         <div>
           <Ul>
             <li>
-              <StyledButton className="primary">sing up</StyledButton>
+              <StyledButton className="primary">sign up</StyledButton>
             </li>
             <Li>
               <StyledLink to="/register">sign in</StyledLink>

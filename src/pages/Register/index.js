@@ -1,5 +1,6 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
+import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 import { register } from "../../utils/axios";
 import styled from "styled-components";
@@ -13,6 +14,26 @@ const Title = styled.h1`
   textalign: center;
   fontsize: 1.5rem;
   padding: 2rem 0;
+`;
+
+const Ul = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  text-decoration: uppercase;
+  padding-left: 0;
+`;
+const StyledLink = styled(Link)`
+  color: #000 !important;
+  text-decoration: none !important;
+  text-transform: uppercase;
+`;
+
+const Li = styled.li`
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  text-transform: uppercase;
 `;
 
 class RegisterForm extends React.PureComponent {
@@ -99,14 +120,23 @@ class RegisterForm extends React.PureComponent {
           type="password"
           label="Confirm Password"
         />
-        <Button
-          color="secondary"
-          style={{
-            textTransform: "uppercase"
-          }}
-        >
-          Register
-        </Button>
+        <div>
+          <Ul>
+            <li>
+              <Button
+                color="secondary"
+                style={{
+                  textTransform: "uppercase"
+                }}
+              >
+                Register
+              </Button>
+            </li>
+            <Li>
+              <StyledLink to="/login">Sign up</StyledLink>
+            </Li>
+          </Ul>
+        </div>
       </Form>
     );
   }
