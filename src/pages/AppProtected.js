@@ -1,82 +1,59 @@
 import React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import { checkLogin } from "../utils/axios";
 import Navbar from "../Navbar";
 import Dashboard from "./Dashboard";
 import Settings from "./Settings";
-import LoginComponent from "./Login";
-import RegisterForm from "./Register/index";
+// import LoginComponent from "./Login";
+// import RegisterForm from "./Register/index";
 
 const publicPages =  ['/login', '/register']
 
 class AppProtected extends React.PureComponent {
-  state = {user: false};
+  state = {
+    isAuthenticated: false,
+    loaded: false
+  };
   componentDidMount() {
-    // const pathname = this.props.location.pathname;
-    // const isPublic = !!(publicPages.indexOf(pathname) !== -1);
-    // const token = localStorage.getItem("usertoken");
-    // if(!token) return this.props.history.push("/login");
-    // if(token) return this.props.history.push("/dashboard");
     this.checkLogin();
   }
 
-  componentDidUpdate(prevProps) {
-    // const pathname = this.props.location.pathname;
-    // const isPublic = !!(publicPages.indexOf(pathname) !== -1);
-    // console.log('prevProps', prevProps);
-    // console.log('pathname', pathname);
-    // if (pathname !== prevProps.location.pathname  && pathname !== '/') return this.checkLogin();
-    // if (pathname !== prevProps.location.pathname && pathname === '/') this.props.history.push("/dashboard");
-  }
 
   
   checkLogin = () => {
-    return checkLogin().then(res => {
-      this.setState({
-          user: res.data
-      // }, () => {
-      //     if (!this.state.user._id) {
-      //       this.props.history.push("/login");
-      //     }
-          // if (this.state.user._id) {
-          //   return this.props.history.push("/dashboard");
-          // }
-        }
-      );
-    }).catch(()=> this.props.history.push("/login"))
+    return checkLogin()
+      .then(res => {
+        console.log('res', res)
+        this.setState({
+          loaded: true,
+          isAuthenticated: res.data._id ? true : false
+        });
+      })
+      .catch((err)=> {
+        this.setState({
+          loaded: true,
+          isAuthenticated: false
+        });
+      })
   };
 
   render() {
-    // const { user } = this.state;
-    // const pathname = this.props.location.pathname;
-    const token = localStorage.getItem("usertoken");
-   
-    // const isPublic = !!(publicPages.indexOf(pathname) !== -1);
+    const {loaded, isAuthenticated} = this.state;
+    console.log('loaded', loaded);
+    console.log('isAuthenticated', isAuthenticated);
+    if(!loaded) return null;
+    if(!isAuthenticated) return <Redirect to="/login" />
     return (
       <>
-        <Switch>
-          <Route
-            exact
-            path="/login"
-            render={({ history }) => (this.state.user && token) ? <Redirect to="/dashboard" /> :  <LoginComponent history={history} />}
-          />
-          <Route
-            exact
-            path="/register"
-            render={({ history }) => (!this.state.user && !token) ?  <RegisterForm history={history}/>  :   <Redirect to="/dashboard" /> }
-          />
-          {this.state.user || token ? (
-            <>
-              <Navbar />
-              <Route exact path="/dashboard" component={Dashboard} />
-              <Route exact path="/settings" component={Settings} />
-              {/* <Redirect to="/dashboard" /> */}
-            </>
-          ) : <Redirect to="/login" />}
-        </Switch>
+        <Navbar />
+        <Route exact path="/" render={(props) => <Redirect to="/dashboard" />} />
+        <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/settings" component={Settings} />
       </>
+      // <Switch>
+      // </Switch>
     );
   }
 }
 
-export default AppProtected;
+export default withRouter(AppProtected);

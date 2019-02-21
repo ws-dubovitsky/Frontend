@@ -80,8 +80,8 @@ class LoginForm extends React.PureComponent {
         return asyncLocalStorage.setItem("usertoken", res.data.token);
       })
       .then(() => {
-        // console.log('asyncLocalStorage.getItem("usertoken")', asyncLocalStorage.getItem("usertoken"))
-        return this.props.history.push(`/dashboard`);
+        console.log('this.props', this.props)
+        return this.props.history.push(`/`);
       })
       .catch(err => {
         // console.log(err);
