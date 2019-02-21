@@ -15,7 +15,6 @@ class Navbar extends React.PureComponent {
     e.preventDefault();
     localStorage.removeItem("usertoken");
     this.props.history.push(`/login`);
-    // console.log(this.props);
   };
 
   render() {
@@ -41,11 +40,10 @@ class Navbar extends React.PureComponent {
             Settings
           </Link>
         </li>
-        {/* <li className="nav-item">
-          <Link className="nav-link" to="/profile">
-            User
-          </Link>
-        </li> */}
+        <li className="nav-item">
+          {this.props.user.username}
+        </li>
+    
         <li className="nav-item">
           <a href="#/" className="nav-link" onClick={this.logOut}>
             Logout

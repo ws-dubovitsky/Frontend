@@ -10,7 +10,7 @@ export default class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-        <Route
+          <Route
             exact
             path="/login"
             render={({history}) => <LoginComponent history={history}/>}
