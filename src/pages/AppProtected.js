@@ -10,22 +10,23 @@ import RegisterForm from "./Register/index";
 const publicPages =  ['/login', '/register']
 
 class AppProtected extends React.PureComponent {
-  state = {};
+  state = {user: false};
   componentDidMount() {
-    const pathname = this.props.location.pathname;
-    const isPublic = !!(publicPages.indexOf(pathname) !== -1);
-    const token = localStorage.getItem("usertoken");
-    if(!token && !isPublic) return this.props.history.push("/login");
+    // const pathname = this.props.location.pathname;
+    // const isPublic = !!(publicPages.indexOf(pathname) !== -1);
+    // const token = localStorage.getItem("usertoken");
+    // if(!token) return this.props.history.push("/login");
+    // if(token) return this.props.history.push("/dashboard");
     this.checkLogin();
   }
 
   componentDidUpdate(prevProps) {
-    const pathname = this.props.location.pathname;
-    const isPublic = !!(publicPages.indexOf(pathname) !== -1);
-    console.log('prevProps', prevProps);
-    console.log('pathname', pathname);
-    if (pathname !== prevProps.location.pathname  && pathname !== '/') return this.checkLogin();
-    if (pathname !== prevProps.location.pathname && pathname === '/') return this.props.history.push("/dashboard");
+    // const pathname = this.props.location.pathname;
+    // const isPublic = !!(publicPages.indexOf(pathname) !== -1);
+    // console.log('prevProps', prevProps);
+    // console.log('pathname', pathname);
+    // if (pathname !== prevProps.location.pathname  && pathname !== '/') return this.checkLogin();
+    // if (pathname !== prevProps.location.pathname && pathname === '/') this.props.history.push("/dashboard");
   }
 
   
@@ -33,43 +34,45 @@ class AppProtected extends React.PureComponent {
     return checkLogin().then(res => {
       this.setState({
           user: res.data
-      }, () => {
-          if (!this.state.user._id) {
-            this.props.history.push("/login");
-          }
+      // }, () => {
+      //     if (!this.state.user._id) {
+      //       this.props.history.push("/login");
+      //     }
           // if (this.state.user._id) {
           //   return this.props.history.push("/dashboard");
           // }
         }
       );
-    });
+    }).catch(()=> this.props.history.push("/login"))
   };
 
   render() {
-    const { user } = this.state;
-    const pathname = this.props.location.pathname;
-    const isPublic = !!(publicPages.indexOf(pathname) !== -1);
+    // const { user } = this.state;
+    // const pathname = this.props.location.pathname;
+    const token = localStorage.getItem("usertoken");
+   
+    // const isPublic = !!(publicPages.indexOf(pathname) !== -1);
     return (
       <>
         <Switch>
           <Route
             exact
             path="/login"
-            render={({ history }) => (this.state.user && this.state.user._id && isPublic) ? <Redirect to="/dashboard" /> :  <LoginComponent history={history} />}
+            render={({ history }) => (this.state.user && token) ? <Redirect to="/dashboard" /> :  <LoginComponent history={history} />}
           />
           <Route
             exact
             path="/register"
-            render={({ history }) => (this.state.user && this.state.user._id && isPublic) ? <Redirect to="/dashboard" /> : <RegisterForm history={history} />}
+            render={({ history }) => (!this.state.user && !token) ?  <RegisterForm history={history}/>  :   <Redirect to="/dashboard" /> }
           />
-          {user && user._id && (
+          {this.state.user || token ? (
             <>
               <Navbar />
               <Route exact path="/dashboard" component={Dashboard} />
               <Route exact path="/settings" component={Settings} />
               {/* <Redirect to="/dashboard" /> */}
             </>
-          )}
+          ) : <Redirect to="/login" />}
         </Switch>
       </>
     );
