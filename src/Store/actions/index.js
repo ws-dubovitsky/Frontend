@@ -1,4 +1,4 @@
-import { FETCH_USER } from './types';
+import { FETCH_USER, FLOORS_AMOUNT } from './types';
 
 export const fetchUserForm = (first_name, last_name, email) => (dispatch) => {
   try {
@@ -15,3 +15,16 @@ export const fetchUserForm = (first_name, last_name, email) => (dispatch) => {
     console.log('error', error);
   }
 };
+
+
+export const changeFloorsAmount = param => (dispatch) => {
+
+  dispatch({
+    type: FLOORS_AMOUNT,
+    payload: param,
+  });
+
+};
+
+
+

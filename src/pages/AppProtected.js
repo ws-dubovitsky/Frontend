@@ -43,7 +43,6 @@ class AppProtected extends React.PureComponent {
           <Route exact path="/dashboard" component={Dashboard} />
           <Route exact path="/settings" component={Settings} />
         </div>
-        <h1>Footer</h1>
       </>
     );
   }

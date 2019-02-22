@@ -1,12 +1,13 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 
 const MyButton = ({ children, onClick }) => (
-  <button
-    type="button"
+  <Button
+    className="primary"
     onClick={onClick}
   >
     {children}
-  </button>
+  </Button>
 );
 
 export default MyButton;

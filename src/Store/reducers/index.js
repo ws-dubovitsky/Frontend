@@ -1,9 +1,11 @@
-import { combineReducers } from "redux";
-import { reducer as formReducer } from "redux-form";
-import userReducer from "./userReducer";
+import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+import userReducer from './userReducer';
+import dashboarReducer from './dashboardReducer';
 
 
 export default combineReducers({
   form: formReducer,
-  userForm: userReducer
+  dashboard: dashboarReducer,
+  userForm: userReducer,
 });
