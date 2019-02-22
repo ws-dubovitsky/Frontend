@@ -1,30 +1,24 @@
-import axios from "axios";
+import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: 'http://localhost:5000/',
   timeout: 60000,
-  headers: { Authorization: localStorage.getItem("usertoken") }
+  headers: { Authorization: localStorage.getItem('usertoken') },
 });
 
-axiosInstance.interceptors.request.use(function(config) {
-  const token = localStorage.getItem("usertoken")
-  // console.log('interceptors token', token)
-  if ( token != null ) {
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('usertoken');
+
+  if (token != null) {
     config.headers.Authorization = token;
   }
 
   return config;
-}, function(err) {
-  return Promise.reject(err);
-});
+}, err => Promise.reject(err));
 
-export const checkLogin = () => axiosInstance.get("/auth");
+export const checkLogin = () => axiosInstance.get('/auth');
 
-export const register = newUser => {
-  return axiosInstance.post("auth/signup", newUser);
-};
+export const register = newUser => axiosInstance.post('auth/signup', newUser);
 
-export const login = user => {
-  return axiosInstance
-    .post("auth/login/", user)
-};
+export const login = user => axiosInstance
+  .post('auth/login/', user);

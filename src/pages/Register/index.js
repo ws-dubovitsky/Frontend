@@ -1,9 +1,9 @@
-import React from "react";
-import { Field, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
-import { register } from "../../utils/axios";
-import styled from "styled-components";
+import React from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
+import styled from 'styled-components';
+import { register } from '../../utils/axios';
 
 const Form = styled.form`
   width: 600px;
@@ -47,8 +47,10 @@ class RegisterForm extends React.PureComponent {
     }
   };
 
-  renderInput = ({ input, label, meta, type }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
+  renderInput = ({
+    input, label, meta, type,
+  }) => {
+    const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
     return (
       <div className={className}>
         <label>{label}</label>
@@ -64,19 +66,18 @@ class RegisterForm extends React.PureComponent {
     lastname,
     email,
     password,
-    confirm_password
+    confirmPassword,
   }) => {
     const data = {
-      username: username,
-      firstname: firstname,
-      lastname: lastname,
-      email: email,
-      password: password,
-      confirm_password: confirm_password
+      username,
+      firstname,
+      lastname,
+      email,
+      password,
+      confirmPassword,
     };
-    // console.log(data);
-    register(data).then(res => {
-      this.props.history.push(`/login`);
+    register(data).then(() => {
+      this.props.history.push('/login');
     });
   };
 
@@ -115,7 +116,7 @@ class RegisterForm extends React.PureComponent {
           label="Enter Password"
         />
         <Field
-          name="confirm_password"
+          name="confirmPassword"
           component={this.renderInput}
           type="password"
           label="Confirm Password"
@@ -126,7 +127,7 @@ class RegisterForm extends React.PureComponent {
               <Button
                 color="secondary"
                 style={{
-                  textTransform: "uppercase"
+                  textTransform: 'uppercase',
                 }}
               >
                 Register
@@ -148,42 +149,42 @@ const validate = ({
   lastname,
   email,
   password,
-  confirm_password
+  confirmPassword,
 }) => {
   const errors = {};
   if (!username) {
-    errors.username = "You must enter user name";
+    errors.username = 'You must enter user name';
   } else if (username.length > 15) {
-    errors.username = "Must be 15 characters or less";
+    errors.username = 'Must be 15 characters or less';
   }
   if (!firstname) {
-    errors.firstname = "You must enter first name";
+    errors.firstname = 'You must enter first name';
   }
   if (!lastname) {
-    errors.lastname = "You must enter last name";
+    errors.lastname = 'You must enter last name';
   }
   if (!email) {
-    errors.email = "You must enter email";
+    errors.email = 'You must enter email';
   } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-    errors.email = "Invalid email address";
+    errors.email = 'Invalid email address';
   }
   if (!password) {
-    errors.password = "You must enter password";
+    errors.password = 'You must enter password';
   }
   if (!password) {
-    errors.password = "You must enter password";
+    errors.password = 'You must enter password';
   }
-  if (!confirm_password) {
-    errors.confirm_password = "You must enter confirm password";
+  if (!confirmPassword) {
+    errors.confirmPassword = 'You must enter confirm password';
   }
-  if (confirm_password !== password) {
-    errors.confirm_password = "Passwords don't match";
+  if (confirmPassword !== password) {
+    errors.confirmPassword = "Passwords don't match";
   }
 
   return errors;
 };
 
 export default reduxForm({
-  form: "streamCreate12",
-  validate
+  form: 'streamCreate12',
+  validate,
 })(RegisterForm);

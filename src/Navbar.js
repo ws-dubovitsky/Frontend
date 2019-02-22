@@ -1,6 +1,6 @@
-import React from "react";
-import { Link, withRouter } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Ul = styled.ul`
   width: 100%;
@@ -11,13 +11,16 @@ const Img = styled.img`
 `;
 
 class Navbar extends React.PureComponent {
-  logOut = e => {
+  logOut = (e) => {
+    const { history } = this.props;
     e.preventDefault();
-    localStorage.removeItem("usertoken");
-    this.props.history.push(`/login`);
+    localStorage.removeItem('usertoken');
+    history.push('/login');
   };
 
+
   render() {
+    const { user } = this.props;
     const loginRegLink = (
       <Ul className="navbar-nav justify-content-end">
         <li className="nav-item">
@@ -40,10 +43,6 @@ class Navbar extends React.PureComponent {
             Settings
           </Link>
         </li>
-        <li className="nav-item">
-          {this.props.user.username}
-        </li>
-    
         <li className="nav-item">
           <a href="#/" className="nav-link" onClick={this.logOut}>
             Logout

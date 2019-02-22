@@ -1,10 +1,10 @@
-import React from "react";
-import jwt_decode from "jwt-decode";
-import { fetchUserForm } from "../../../Store/actions";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Container, Col, Table } from "reactstrap";
-import styled from "styled-components";
+import React from 'react';
+import jwtDecode from 'jwt-decode';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Container, Col, Table } from 'reactstrap';
+import styled from 'styled-components';
+import { fetchUserForm } from '../../Store/actions';
 
 const Title = styled.h1`
   text-align: center;
@@ -16,11 +16,11 @@ const Title = styled.h1`
 class UserForm extends React.PureComponent {
   componentDidMount() {
     const token = localStorage.usertoken;
-    const decoded = jwt_decode(token);
+    const decoded = jwtDecode(token);
     this.props.fetchUserForm(
       decoded.first_name,
       decoded.last_name,
-      decoded.email
+      decoded.email,
     );
   }
 
@@ -61,5 +61,5 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(UserForm);
