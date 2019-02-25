@@ -18,6 +18,7 @@ class StatefullRadioGroup extends React.Component {
 
   selected = (param) => {
     // const { data } = this.state;
+
     // data[parseInt(param.index, 10)].checked = true;
     // console.log('data', data);
     // this.setState({

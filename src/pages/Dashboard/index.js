@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
-import { changeFloorsAmount } from '../../Store/actions';
+import { changeFloorsAmount, changeAppartmentsSelectorData, changeFloorSelectorData } from '../../Store/actions';
 import Header from '../../SharedComponents/Header/index';
 import RadioButtonGroup from '../../SharedComponents/RadioButtonGroup/index';
 import NumberSelector from '../../SharedComponents/NumberSelector/index';
@@ -28,11 +28,38 @@ const RightDiv = styled.div`
   align-items: flex-end;
 `;
 
+const StyledDivButton = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 30px;
+`;
+
+const StyledButton = styled(Button)`
+  display: flex;
+`;
+
 class Dashboard extends React.Component {
   onChangeNumber = (param) => {
-    console.log('param', param);
+    if (param.value < 1 || param.value > this.props.dashboard.maxFloorsAmount) return null;
     this.props.changeFloorsAmount(param);
-  }
+  };
+
+  onAppartmentsSelectorData = (select) => {
+    console.log('select', select);
+    this.props.changeAppartmentsSelectorData(select);
+  };
+
+  onFloorSelectorData = (select) => {
+    console.log('select', select);
+    this.props.changeFloorSelectorData(select);
+  };
+
+
+  onNextPage = () => {
+    console.log('Clicked');
+    this.props.history.push('/step-two');
+  };
 
 
   render() {
@@ -51,7 +78,10 @@ class Dashboard extends React.Component {
             <RadioButtonGroup
               name="appartments-selector"
               data={appartmentsSelectorData}
-              selected={this.appTypeSelected}
+              selected={this.onAppartmentsSelectorData}
+              checked={this.props.dashboard.checkedAppartments}
+              onChange={this.onChangeAppartmentsSelectorData}
+              // checked={this.props.dashboard.checkedAppartments == 'appartments'}
             />
             <NumberSelector
               label="Floors"
@@ -63,18 +93,15 @@ class Dashboard extends React.Component {
             <RadioButtonGroup
               name="floor-selector"
               data={floorSelectorData}
-              selected={this.floorSelected}
+              selected={this.onFloorSelectorData}
+              checked={this.props.dashboard.checkedFloor}
             />
             <BuildingSchema data={schemaData} width={300} height={600} />
           </RightDiv>
         </StyledBody>
-        <Button
-          onClick={() => {
-            console.log('clicked');
-          }}
-        >
-          Next
-        </Button>
+        <StyledDivButton>
+          <StyledButton onClick={this.onNextPage}>Next</StyledButton>
+        </StyledDivButton>
       </>
     );
   }
@@ -85,7 +112,10 @@ function mapStateToProps({ dashboard }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ changeFloorsAmount }, dispatch);
+  return bindActionCreators(
+    { changeFloorsAmount, changeAppartmentsSelectorData, changeFloorSelectorData },
+    dispatch,
+  );
 }
 
 export default connect(

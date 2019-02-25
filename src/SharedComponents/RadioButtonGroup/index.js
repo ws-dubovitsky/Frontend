@@ -14,16 +14,17 @@ export default class RadioButtonGroup extends React.PureComponent {
   render() {
     const { data, name } = this.props;
     console.log('data', data);
+    console.log('checked', this.props.checked);
     return (
       <StyledDiv>
         {data.map(d => (
           <RadioButton
             key={d.label + d.id}
-            onChange={this.onChange}
             name={name}
-            checked={d.checked}
             value={d.value}
             label={d.label}
+            checked={this.props.checked}
+            onChange={this.onChange}
           />
         ))}
       </StyledDiv>

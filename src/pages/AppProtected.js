@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect, Route, withRouter } from 'react-router-dom';
 import { checkLogin } from '../utils/axios';
-import Navbar from '../Navbar';
+// import Navbar from '../Navbar';
 import Dashboard from './Dashboard';
+import stepTwoComponent from './stepTwoComponent/index';
 import Settings from './Settings';
 
 class AppProtected extends React.PureComponent {
@@ -41,6 +42,7 @@ class AppProtected extends React.PureComponent {
         <div>
           <Route exact path="/" render={() => <Redirect to="/dashboard" />} />
           <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/step-two" component={stepTwoComponent} />
           <Route exact path="/settings" component={Settings} />
         </div>
       </>

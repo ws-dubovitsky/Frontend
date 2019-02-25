@@ -1,16 +1,19 @@
-import { FLOORS_AMOUNT } from '../actions/types';
+import { FLOORS_AMOUNT, RADIO_BUTTON_APPARTMENTS, RADIO_BUTTON_FLOORS } from '../actions/types';
+import { generateSchemData } from '../../utils/helper';
 
-const possibleSchemValues = [
-  { id: 1, label: 'LG' },
-  { id: 2, label: 'G' },
-  { id: 3, label: 1 },
-  { id: 4, label: 2 },
-  { id: 5, label: 3 },
-  { id: 6, label: 4 },
-];
+
+// const possibleSchemValues = [
+//   { id: 1, label: 'LG' },
+//   { id: 2, label: 'G' },
+//   { id: 3, label: 1 },
+//   { id: 4, label: 2 },
+//   { id: 5, label: 3 },
+//   { id: 6, label: 4 },
+// ];
 
 const initialState = {
   floorsAmount: 1,
+  maxFloorsAmount: 6,
   appartmentsSelectorData: [
     {
       id: 1,
@@ -46,30 +49,22 @@ export default (prevState = initialState, { type, payload }) => {
       return {
         ...prevState,
         floorsAmount: (() => {
-          if (payload.value > possibleSchemValues.length || payload.value < 1) { return prevState.floorsAmount; }
+          if (payload.value > 6 || payload.value < 1) { return prevState.floorsAmount; }
           return payload.value;
         })(),
-        schemaData: (() => {
-          const { schemaData, checkedFloor, floorsAmount } = prevState;
-          console.log(
-            'schemaData, checkedFloor, floorsAmount',
-            schemaData,
-            checkedFloor,
-            floorsAmount,
-          );
-          const offset = checkedFloor === 'lg' ? 0 : 1;
-          if (
-            payload.value > floorsAmount
-            && payload.value <= possibleSchemValues.length
-          ) {
-            console.log('payload.value', payload.value);
-            // Increment
-            schemaData.unshift(possibleSchemValues[payload.value - 1 + offset]);
-          } else if (payload.value < floorsAmount && payload.value > 0) {
-            schemaData.shift(possibleSchemValues[payload.value - 1 + offset]);
-          }
-          return schemaData;
-        })(),
+        schemaData: generateSchemData(payload.value, prevState.checkedFloor),
+      };
+    case RADIO_BUTTON_APPARTMENTS:
+      return {
+        ...prevState,
+        checkedAppartments: payload.value,
+      };
+    case RADIO_BUTTON_FLOORS:
+      return {
+        ...prevState,
+        checkedFloor: payload.value,
+        schemaData: generateSchemData(prevState.floorsAmount, payload.value),
+
       };
     default:
       return prevState;

@@ -34,7 +34,7 @@ const RadioButton = ({
       type="radio"
       name={name}
       value={value}
-      checked={checked}
+      checked={checked === value}
     />
   </StyledDiv>
 );
